@@ -1,0 +1,64 @@
+﻿Build started 16/12/2015 12:18:23.
+     1>Project "K:\EICG605GameGroupProject\myGame\source\library\library.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         I:\Programs\Visual Studio Pro 2013 v4\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BasicMaterial.cpp Camera.cpp DirectionalLight.cpp DrawableGameComponent.cpp Effect.cpp FirstPersonCamera.cpp FpsComponent.cpp Game.cpp GameComponent.cpp Keyboard.cpp Light.cpp Material.cpp MatrixHelper.cpp Mesh.cpp Model.cpp ModelMaterial.cpp Mouse.cpp Pass.cpp ProxyModel.cpp RasterizerStates.cpp RenderStateHelper.cpp SamplerStates.cpp ServiceContainer.cpp Technique.cpp Utility.cpp Variable.cpp VectorHelper.cpp
+         BasicMaterial.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Camera.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         DirectionalLight.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         DrawableGameComponent.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Effect.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         FirstPersonCamera.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         FpsComponent.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Game.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         GameComponent.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Keyboard.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Light.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Material.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         MatrixHelper.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Mesh.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Model.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         ModelMaterial.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Mouse.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Pass.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         ProxyModel.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         RasterizerStates.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Compiling...
+         RenderStateHelper.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         SamplerStates.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         ServiceContainer.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Technique.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Utility.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         Variable.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+         VectorHelper.cpp
+     1>k:\eicg605gamegroupproject\mygame\source\library\Common.h(13): fatal error C1083: Cannot open include file: 'd3dx11Effect.h': No such file or directory
+     1>Done Building Project "K:\EICG605GameGroupProject\myGame\source\library\library.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:13.12

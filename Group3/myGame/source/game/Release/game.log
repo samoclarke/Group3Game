@@ -1,0 +1,11 @@
+﻿Build started 16/12/2015 12:18:36.
+     1>Project "K:\EICG605GameGroupProject\myGame\source\game\game.vcxproj" on node 2 (Build target(s)).
+     1>FxCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"main" /T fx_4_0_level_9_1 /Fo "K:\EICG605GameGroupProject\myGame\build\Release\DiffuseLighting.cso" ..\..\content\Effects\DiffuseLighting.fx 
+         Unsupported shader model specified "fx_4_0_level_9_1"
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppCommon.targets(1126,5): error MSB6006: "fxc.exe" exited with code 1.
+     1>Done Building Project "K:\EICG605GameGroupProject\myGame\source\game\game.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.27
