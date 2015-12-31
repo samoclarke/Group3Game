@@ -29,8 +29,8 @@ namespace Rendering
 	const float ShadowMappingDemo::LightModulationRate = UCHAR_MAX;
 	const float ShadowMappingDemo::LightMovementRate = 10.0f;
 	const XMFLOAT2 ShadowMappingDemo::LightRotationRate = XMFLOAT2(XM_2PI, XM_2PI);
-	const UINT ShadowMappingDemo::DepthMapWidth = 1024U;
-	const UINT ShadowMappingDemo::DepthMapHeight = 1024U;
+	const UINT ShadowMappingDemo::DepthMapWidth = 4096U;
+	const UINT ShadowMappingDemo::DepthMapHeight = 4096U;
 	const RECT ShadowMappingDemo::DepthMapDestinationRectangle = { 0, 512, 256, 768 };
 	const float ShadowMappingDemo::DepthBiasModulationRate = 10000;
 
@@ -116,8 +116,6 @@ namespace Rendering
 		
 		mDepthMapMaterial->CreateVertexBuffer(mGame->Direct3DDevice(), &positionVertices[0], mPlaneVertexCount, &mPlanePositionVertexBuffer);
 		mShadowMappingMaterial->CreateVertexBuffer(mGame->Direct3DDevice(), positionUVNormalVertices, mPlaneVertexCount, &mPlanePositionUVNormalVertexBuffer);
-
-
 		
 		std::wstring textureName = L"Content\\Textures\\house.bmp";
 		HRESULT hr = DirectX::CreateWICTextureFromFile(mGame->Direct3DDevice(), mGame->Direct3DDeviceContext(), textureName.c_str(), nullptr, &mCheckerboardTexture);
@@ -126,11 +124,9 @@ namespace Rendering
 			throw GameException("CreateWICTextureFromFile() failed.", hr);
 		}
 
-
 		//create the floor texture
-
 		textureName = L"Content\\Textures\\white.jpg";
-	hr = DirectX::CreateWICTextureFromFile(mGame->Direct3DDevice(), mGame->Direct3DDeviceContext(), textureName.c_str(), nullptr, &mFloorTexture);
+		hr = DirectX::CreateWICTextureFromFile(mGame->Direct3DDevice(), mGame->Direct3DDeviceContext(), textureName.c_str(), nullptr, &mFloorTexture);
 		if (FAILED(hr))
 		{
 			throw GameException("CreateWICTextureFromFile() failed.", hr);
@@ -138,7 +134,7 @@ namespace Rendering
 
 
 		mPointLight = new PointLight(*mGame);
-		mPointLight->SetRadius(50.0f);
+		mPointLight->SetRadius(1000.0f);
 		mPointLight->SetPosition(0.0f, 5.0f, 2.0f);
 
 		mKeyboard = (Keyboard*)mGame->Services().GetService(Keyboard::TypeIdClass());
@@ -146,6 +142,8 @@ namespace Rendering
 
 		mProxyModel = new ProxyModel(*mGame, *mCamera, "Content\\Models\\PointLightProxy.obj", 0.5f);
 		mProxyModel->Initialize();
+
+		obj_ = new GameObject("house.3ds", *mGame, *mCamera);
 
 		XMStoreFloat4x4(&mPlaneWorldMatrix, XMMatrixRotationX(-1.57f)* XMMatrixScaling(100.0f, 100.0f, 100.0f)* XMMatrixTranslation(0.0f, 0.0f, 5.5f));
 
@@ -192,6 +190,8 @@ namespace Rendering
 		UpdateSpecularLight(gameTime);
 
 		mProxyModel->Update(gameTime);
+		obj_->Update(gameTime);
+
 		mProjector->Update(gameTime);
 		mRenderableProjectorFrustum->Update(gameTime);
 	}
@@ -200,7 +200,6 @@ namespace Rendering
 	{
 		static float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-		// Depth map pass (render the teapot model only)
 		mRenderStateHelper.SaveRasterizerState();
 		mDepthMap->Begin();
 
@@ -283,6 +282,7 @@ namespace Rendering
 		mShadowMappingMaterial->LightColor() << mPointLight->ColorVector();
 		mShadowMappingMaterial->LightPosition() << mPointLight->PositionVector();
 		mShadowMappingMaterial->LightRadius() << mPointLight->Radius();
+
 		//house
 		mShadowMappingMaterial->ColorTexture() << mCheckerboardTexture;
 		mShadowMappingMaterial->CameraPosition() << mCamera->PositionVector();
@@ -295,15 +295,16 @@ namespace Rendering
 		direct3DDeviceContext->DrawIndexed(mModelIndexCount, 0, 0); //draw the main object
 		mGame->UnbindPixelShaderResources(0, 3);
 
+		obj_->Draw(gameTime);
 		mProxyModel->Draw(gameTime);
 		mRenderableProjectorFrustum->Draw(gameTime);
-		
+
 		mRenderStateHelper.SaveAll();
 		mSpriteBatch->Begin();
 
 		if (mDrawDepthMap)
 		{
-			mSpriteBatch->Draw(mDepthMap->OutputTexture(), DepthMapDestinationRectangle);
+			//mSpriteBatch->Draw(mDepthMap->OutputTexture(), DepthMapDestinationRectangle);
 		}
 
 		std::wostringstream helpLabel;

@@ -1,123 +1,9 @@
-﻿Build started 29/12/2015 15:15:50.
-     1>Project "C:\Users\soclarke\Source\Repos\Group3\myGame\source\library\library.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 31/12/2015 19:25:12.
+     1>Project "C:\Users\soclarke\Source\Repos\Group3\myGame\source\library\library.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         I:\Programs\Visual Studio Pro 2013 v4\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Windows Kits\8.1\Include\um" /I"C:\Program Files (x86)\Windows Kits\8.1\Include\shared" /I"C:\Program Files (x86)\Windows Kits\8.1\Include\winrt" /IC:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\Effects11\include /IC:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\DirectXTK\include /IC:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\assimp\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BasicMaterial.cpp BlendStates.cpp Bloom.cpp BloomMaterial.cpp BoundingSphere.cpp BufferContainer.cpp Camera.cpp ColorHelper.cpp DepthMap.cpp DepthMapMaterial.cpp DirectionalLight.cpp DistortionMapping.cpp DistortionMappingMaterial.cpp DrawableGameComponent.cpp Effect.cpp FirstPersonCamera.cpp FpsComponent.cpp Frustum.cpp FullScreenQuad.cpp FullScreenRenderTarget.cpp Game.cpp GameClock.cpp GameComponent.cpp GameException.cpp GameTime.cpp GaussianBlur.cpp GaussianBlurMaterial.cpp Grid.cpp Keyboard.cpp Light.cpp Material.cpp MatrixHelper.cpp Mesh.cpp Model.cpp ModelMaterial.cpp Mouse.cpp Pass.cpp PointLight.cpp PostProcessingMaterial.cpp ProjectiveTextureMappingMaterial.cpp Projector.cpp ProxyModel.cpp RasterizerStates.cpp Ray.cpp RenderableFrustum.cpp RenderStateHelper.cpp RenderTarget.cpp SamplerStates.cpp ServiceContainer.cpp ShadowMappingMaterial.cpp Skybox.cpp SkyboxMaterial.cpp SpotLight.cpp Technique.cpp Utility.cpp Variable.cpp VectorHelper.cpp
-         VectorHelper.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Variable.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Utility.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Technique.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         SpotLight.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         SkyboxMaterial.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Skybox.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         ShadowMappingMaterial.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         ServiceContainer.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         SamplerStates.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         RenderTarget.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         RenderStateHelper.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         RenderableFrustum.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Ray.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         RasterizerStates.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         I:\Programs\Visual Studio Pro 2013 v4\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Windows Kits\8.1\Include\um" /I"C:\Program Files (x86)\Windows Kits\8.1\Include\shared" /I"C:\Program Files (x86)\Windows Kits\8.1\Include\winrt" /IC:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\Effects11\include /IC:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\DirectXTK\include /IC:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\assimp\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ProxyModel.cpp
          ProxyModel.cpp
          c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Projector.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         ProjectiveTextureMappingMaterial.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         PostProcessingMaterial.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         PointLight.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Generating Code...
-         Compiling...
-         Pass.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Mouse.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         ModelMaterial.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Model.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Mesh.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         MatrixHelper.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Material.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Light.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Keyboard.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Grid.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         GaussianBlurMaterial.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         GaussianBlur.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         GameTime.cpp
-         GameException.cpp
-         GameComponent.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         GameClock.cpp
-         Game.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         FullScreenRenderTarget.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         FullScreenQuad.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Frustum.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Generating Code...
-         Compiling...
-         FpsComponent.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         FirstPersonCamera.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Effect.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         DrawableGameComponent.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         DistortionMappingMaterial.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         DistortionMapping.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         DirectionalLight.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         DepthMapMaterial.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         DepthMap.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         ColorHelper.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Camera.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         BufferContainer.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         BoundingSphere.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         BloomMaterial.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Bloom.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         BlendStates.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         BasicMaterial.cpp
-         c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         Generating Code...
        Lib:
          I:\Programs\Visual Studio Pro 2013 v4\VC\bin\Lib.exe /OUT:"C:\Users\soclarke\Source\Repos\Group3\myGame\build\Debug\libraryD.lib" /NOLOGO Debug\BasicMaterial.obj
          Debug\BlendStates.obj
@@ -183,8 +69,8 @@
          :VCEnd
          A subdirectory or file C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\lib\ already exists.
                  1 file(s) copied.
-     1>Done Building Project "C:\Users\soclarke\Source\Repos\Group3\myGame\source\library\library.vcxproj" (Rebuild target(s)).
+     1>Done Building Project "C:\Users\soclarke\Source\Repos\Group3\myGame\source\library\library.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:56.87
+Time Elapsed 00:00:01.86

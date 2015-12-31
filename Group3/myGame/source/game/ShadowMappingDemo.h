@@ -3,6 +3,7 @@
 #include "DrawableGameComponent.h"
 #include "Frustum.h"
 #include "RenderStateHelper.h"
+#include "GameObject.h"
 
 using namespace Library;
 
@@ -114,5 +115,8 @@ namespace Rendering
 		ID3D11RasterizerState* mDepthBiasState;
 		float mDepthBias;
 		float mSlopeScaledDepthBias;
+
+		GameObject* obj_;
+
 	};
 }
