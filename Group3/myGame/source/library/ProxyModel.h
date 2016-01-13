@@ -13,7 +13,7 @@ namespace Library
 		RTTI_DECLARATIONS(ProxyModel, DrawableGameComponent)
 
 	public:
-		ProxyModel(Game& game, Camera& camera, const std::string& modelFileName, float scale = 1.0f);
+		ProxyModel(Game& game, Camera& camera, const std::string& modelFileName, XMFLOAT3 scale);
 		~ProxyModel();
 
 		const XMFLOAT3& Position() const;

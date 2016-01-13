@@ -3,7 +3,11 @@
 #include "DrawableGameComponent.h"
 #include "Frustum.h"
 #include "RenderStateHelper.h"
+
 #include "GameObject.h"
+#include "Player.h"
+
+#include "Scene.h"
 
 using namespace Library;
 
@@ -116,7 +120,16 @@ namespace Rendering
 		float mDepthBias;
 		float mSlopeScaledDepthBias;
 
-		GameObject* obj_;
+		std::vector<GameObject*> objs_;
+		Player* player_;
+
+		Rigidbody* box_body_;
+		ProxyModel* box_debug_;
+
+		Rigidbody* box_body_2_;
+		ProxyModel* box_debug_2_;
+
+		Scene* scene_;
 
 	};
 }

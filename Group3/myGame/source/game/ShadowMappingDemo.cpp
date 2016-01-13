@@ -21,31 +21,32 @@
 #include <SpriteFont.h>
 #include <sstream>
 #include <iomanip>
+#include "GameObject.h"
 
 namespace Rendering
 {
 	RTTI_DEFINITIONS(ShadowMappingDemo)
 
-	const float ShadowMappingDemo::LightModulationRate = UCHAR_MAX;
+		const float ShadowMappingDemo::LightModulationRate = UCHAR_MAX;
 	const float ShadowMappingDemo::LightMovementRate = 10.0f;
 	const XMFLOAT2 ShadowMappingDemo::LightRotationRate = XMFLOAT2(XM_2PI, XM_2PI);
-	const UINT ShadowMappingDemo::DepthMapWidth = 4096U;
-	const UINT ShadowMappingDemo::DepthMapHeight = 4096U;
+	const UINT ShadowMappingDemo::DepthMapWidth = 1024U;
+	const UINT ShadowMappingDemo::DepthMapHeight = 1024U;
 	const RECT ShadowMappingDemo::DepthMapDestinationRectangle = { 0, 512, 256, 768 };
 	const float ShadowMappingDemo::DepthBiasModulationRate = 10000;
 
 	ShadowMappingDemo::ShadowMappingDemo(Game& game, Camera& camera)
 		: DrawableGameComponent(game, camera), mCheckerboardTexture(nullptr),
-		  mPlanePositionVertexBuffer(nullptr), mPlanePositionUVNormalVertexBuffer(nullptr), mPlaneIndexBuffer(nullptr), mPlaneVertexCount(0),
-		  mKeyboard(nullptr), mAmbientColor(1.0f, 1.0f, 1.0, 0.0f), mPointLight(nullptr), 
-		  mSpecularColor(1.0f, 1.0f, 1.0f, 1.0f), mSpecularPower(25.0f), mPlaneWorldMatrix(MatrixHelper::Identity), mProxyModel(nullptr),
-		  mProjector(nullptr), mProjectorFrustum(XMMatrixIdentity()), mRenderableProjectorFrustum(nullptr),
-		  mShadowMappingEffect(nullptr), mShadowMappingMaterial(nullptr),
-		  mProjectedTextureScalingMatrix(MatrixHelper::Zero), mRenderStateHelper(game),
-		  mModelPositionVertexBuffer(nullptr), mModelPositionUVNormalVertexBuffer(nullptr), mModelIndexBuffer(nullptr), mModelIndexCount(0),
-		  mModelWorldMatrix(MatrixHelper::Identity), mDepthMapEffect(nullptr), mDepthMapMaterial(nullptr), mDepthMap(nullptr), mDrawDepthMap(true),
-		  mSpriteBatch(nullptr), mSpriteFont(nullptr), mTextPosition(0.0f, 40.0f), mActiveTechnique(ShadowMappingTechniqueSimple),
-		  mDepthBiasState(nullptr), mDepthBias(0), mSlopeScaledDepthBias(2.0f), mFloorTexture(nullptr)
+		mPlanePositionVertexBuffer(nullptr), mPlanePositionUVNormalVertexBuffer(nullptr), mPlaneIndexBuffer(nullptr), mPlaneVertexCount(0),
+		mKeyboard(nullptr), mAmbientColor(1.0f, 1.0f, 1.0, 0.0f), mPointLight(nullptr),
+		mSpecularColor(1.0f, 1.0f, 1.0f, 1.0f), mSpecularPower(25.0f), mPlaneWorldMatrix(MatrixHelper::Identity), mProxyModel(nullptr),
+		mProjector(nullptr), mProjectorFrustum(XMMatrixIdentity()), mRenderableProjectorFrustum(nullptr),
+		mShadowMappingEffect(nullptr), mShadowMappingMaterial(nullptr),
+		mProjectedTextureScalingMatrix(MatrixHelper::Zero), mRenderStateHelper(game),
+		mModelPositionVertexBuffer(nullptr), mModelPositionUVNormalVertexBuffer(nullptr), mModelIndexBuffer(nullptr), mModelIndexCount(0),
+		mModelWorldMatrix(MatrixHelper::Identity), mDepthMapEffect(nullptr), mDepthMapMaterial(nullptr), mDepthMap(nullptr), mDrawDepthMap(true),
+		mSpriteBatch(nullptr), mSpriteFont(nullptr), mTextPosition(0.0f, 40.0f), mActiveTechnique(ShadowMappingTechniqueSimple),
+		mDepthBiasState(nullptr), mDepthBias(0), mSlopeScaledDepthBias(2.0f), mFloorTexture(nullptr)
 	{
 	}
 
@@ -78,13 +79,16 @@ namespace Rendering
 	{
 		SetCurrentDirectory(Utility::ExecutableDirectory().c_str());
 
+		//Set up physics scene
+		scene_ = new Scene();
+
 		// Initialize materials
 		mShadowMappingEffect = new Effect(*mGame);
 		mShadowMappingEffect->LoadCompiledEffect(L"Content\\Effects\\ShadowMapping.cso");
 
 		mShadowMappingMaterial = new ShadowMappingMaterial();
 		mShadowMappingMaterial->Initialize(*mShadowMappingEffect);
-		
+
 		mDepthMapEffect = new Effect(*mGame);
 		mDepthMapEffect->LoadCompiledEffect(L"Content\\Effects\\DepthMap.cso");
 
@@ -92,8 +96,8 @@ namespace Rendering
 		mDepthMapMaterial->Initialize(*mDepthMapEffect);
 
 		// Plane vertex buffers
-		VertexPositionTextureNormal positionUVNormalVertices[] = 
-        {
+		VertexPositionTextureNormal positionUVNormalVertices[] =
+		{
 			VertexPositionTextureNormal(XMFLOAT4(-0.5f, 0.0f, 0.0f, 1.0f), XMFLOAT2(0.0f, 1.0f), Vector3Helper::Backward),
 			VertexPositionTextureNormal(XMFLOAT4(-0.5f, 1.0f, 0.0f, 1.0f), XMFLOAT2(0.0f, 0.0f), Vector3Helper::Backward),
 			VertexPositionTextureNormal(XMFLOAT4(0.5f, 1.0f, 0.0f, 1.0f), XMFLOAT2(1.0f, 0.0f), Vector3Helper::Backward),
@@ -101,7 +105,7 @@ namespace Rendering
 			VertexPositionTextureNormal(XMFLOAT4(-0.5f, 0.0f, 0.0f, 1.0f), XMFLOAT2(0.0f, 1.0f), Vector3Helper::Backward),
 			VertexPositionTextureNormal(XMFLOAT4(0.5f, 1.0f, 0.0f, 1.0f), XMFLOAT2(1.0f, 0.0f), Vector3Helper::Backward),
 			VertexPositionTextureNormal(XMFLOAT4(0.5f, 0.0f, 0.0f, 1.0f), XMFLOAT2(1.0f, 1.0f), Vector3Helper::Backward),
-        };
+		};
 
 		mPlaneVertexCount = ARRAYSIZE(positionUVNormalVertices);
 		std::vector<VertexPositionNormal> positionNormalVertices;
@@ -113,10 +117,12 @@ namespace Rendering
 			positionNormalVertices.push_back(VertexPositionNormal(positionUVNormalVertices[i].Position, positionUVNormalVertices[i].Normal));
 			positionVertices.push_back(VertexPosition(positionUVNormalVertices[i].Position));
 		}
-		
+
 		mDepthMapMaterial->CreateVertexBuffer(mGame->Direct3DDevice(), &positionVertices[0], mPlaneVertexCount, &mPlanePositionVertexBuffer);
 		mShadowMappingMaterial->CreateVertexBuffer(mGame->Direct3DDevice(), positionUVNormalVertices, mPlaneVertexCount, &mPlanePositionUVNormalVertexBuffer);
-		
+
+
+
 		std::wstring textureName = L"Content\\Textures\\house.bmp";
 		HRESULT hr = DirectX::CreateWICTextureFromFile(mGame->Direct3DDevice(), mGame->Direct3DDeviceContext(), textureName.c_str(), nullptr, &mCheckerboardTexture);
 		if (FAILED(hr))
@@ -124,7 +130,9 @@ namespace Rendering
 			throw GameException("CreateWICTextureFromFile() failed.", hr);
 		}
 
+
 		//create the floor texture
+
 		textureName = L"Content\\Textures\\white.jpg";
 		hr = DirectX::CreateWICTextureFromFile(mGame->Direct3DDevice(), mGame->Direct3DDeviceContext(), textureName.c_str(), nullptr, &mFloorTexture);
 		if (FAILED(hr))
@@ -134,16 +142,34 @@ namespace Rendering
 
 
 		mPointLight = new PointLight(*mGame);
-		mPointLight->SetRadius(1000.0f);
+		mPointLight->SetRadius(50.0f);
 		mPointLight->SetPosition(0.0f, 5.0f, 2.0f);
 
 		mKeyboard = (Keyboard*)mGame->Services().GetService(Keyboard::TypeIdClass());
 		assert(mKeyboard != nullptr);
 
-		mProxyModel = new ProxyModel(*mGame, *mCamera, "Content\\Models\\PointLightProxy.obj", 0.5f);
+		mProxyModel = new ProxyModel(*mGame, *mCamera, "Content\\Models\\PointLightProxy.obj", XMFLOAT3{ 0.5,0.5,0.5 });
 		mProxyModel->Initialize();
 
-		obj_ = new GameObject("house.3ds", *mGame, *mCamera);
+		AABB* box = new AABB();
+		box->center     =	{ 0.0f, -40.0f, 0.0f  };
+		box->halfwidths =	{ 20.0f, 40.0f, 20.0f };
+		box_debug_ = new ProxyModel(*mGame, *mCamera, "Content\\Models\\OBBProxy.3ds", box->halfwidths);
+		box_debug_->Initialize();
+		box_debug_->SetPosition(box->center);
+		box_body_ = new Rigidbody(0, box, box->center);
+		scene_->AddRigidBody(box_body_);
+
+		AABB* box_2 = new AABB();
+		box_2->center = { 0.0f, 0.0f, 0.0f };
+		box_2->halfwidths = { 5.0f, 5.0f, 5.0f };
+		box_debug_2_ = new ProxyModel(*mGame, *mCamera, "Content\\Models\\OBBProxy.3ds", box_2->halfwidths);
+		box_debug_2_->Initialize();
+		box_debug_2_->SetPosition(box_2->center);
+		box_body_2_ = new Rigidbody(0, box_2, box_2->center);
+		scene_->AddRigidBody(box_body_2_);
+
+		
 
 		XMStoreFloat4x4(&mPlaneWorldMatrix, XMMatrixRotationX(-1.57f)* XMMatrixScaling(100.0f, 100.0f, 100.0f)* XMMatrixTranslation(0.0f, 0.0f, 5.5f));
 
@@ -166,12 +192,19 @@ namespace Rendering
 		mShadowMappingMaterial->CreateVertexBuffer(mGame->Direct3DDevice(), *mesh, &mModelPositionUVNormalVertexBuffer);
 		mesh->CreateIndexBuffer(&mModelIndexBuffer);
 		mModelIndexCount = mesh->Indices().size();
-		
-		XMStoreFloat4x4(&mModelWorldMatrix, XMMatrixRotationX(-1.57f)* XMMatrixScaling(0.025f, 0.025f, 0.025f) * XMMatrixTranslation(0.0f, 4.25f, -4.5f));		
+
+		XMStoreFloat4x4(&mModelWorldMatrix, XMMatrixRotationX(-1.57f)* XMMatrixScaling(0.025f, 0.025f, 0.025f) * XMMatrixTranslation(0.0f, 4.25f, -4.5f));
 
 		mDepthMap = new DepthMap(*mGame, DepthMapWidth, DepthMapHeight);
 		mSpriteBatch = new SpriteBatch(mGame->Direct3DDeviceContext());
 		mSpriteFont = new SpriteFont(mGame->Direct3DDevice(), L"Content\\Fonts\\Arial_14_Regular.spritefont");
+
+		std::string s1 = "Miguel.3ds";
+		GameObject* obj = new GameObject( s1, *mGame, *mCamera);
+		objs_.push_back(obj);
+
+		player_ = new Player(*mGame, *mCamera, *mKeyboard);
+		scene_->AddRigidBody(player_->GetRigidBody());
 
 		UpdateDepthBiasState();
 	}
@@ -189,9 +222,19 @@ namespace Rendering
 		UpdatePointLightAndProjector(gameTime);
 		UpdateSpecularLight(gameTime);
 
-		mProxyModel->Update(gameTime);
-		obj_->Update(gameTime);
+		for (int i = 0; i < objs_.size(); i++)
+		{
+			objs_[i]->Update(gameTime);
+		}
 
+		player_->Update(gameTime);
+
+		box_debug_->Update(gameTime);
+		box_debug_2_->Update(gameTime);
+
+		scene_->Step(gameTime.ElapsedGameTime());
+
+		mProxyModel->Update(gameTime);
 		mProjector->Update(gameTime);
 		mRenderableProjectorFrustum->Update(gameTime);
 	}
@@ -200,6 +243,7 @@ namespace Rendering
 	{
 		static float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
+		// Depth map pass (render the teapot model only)
 		mRenderStateHelper.SaveRasterizerState();
 		mDepthMap->Begin();
 
@@ -210,7 +254,7 @@ namespace Rendering
 		Pass* pass = mDepthMapMaterial->CurrentTechnique()->Passes().at(0);
 		ID3D11InputLayout* inputLayout = mDepthMapMaterial->InputLayouts().at(pass);
 		direct3DDeviceContext->IASetInputLayout(inputLayout);
-		
+
 		direct3DDeviceContext->RSSetState(mDepthBiasState);
 
 		UINT stride = mDepthMapMaterial->VertexSize();
@@ -222,14 +266,14 @@ namespace Rendering
 		mDepthMapMaterial->WorldLightViewProjection() << modelWorldMatrix * mProjector->ViewMatrix() * mProjector->ProjectionMatrix();
 
 		pass->Apply(0, direct3DDeviceContext);
-		
+
 		direct3DDeviceContext->DrawIndexed(mModelIndexCount, 0, 0); //shadow map drawing
 
 		mDepthMap->End();
 		mRenderStateHelper.RestoreRasterizerState();
 
 		// Projective texture mapping pass
-		pass = mShadowMappingMaterial->CurrentTechnique()->Passes().at(0);		
+		pass = mShadowMappingMaterial->CurrentTechnique()->Passes().at(0);
 		inputLayout = mShadowMappingMaterial->InputLayouts().at(pass);
 		direct3DDeviceContext->IASetInputLayout(inputLayout);
 
@@ -253,8 +297,8 @@ namespace Rendering
 		mShadowMappingMaterial->LightColor() << mPointLight->ColorVector();
 		mShadowMappingMaterial->LightPosition() << mPointLight->PositionVector();
 		mShadowMappingMaterial->LightRadius() << mPointLight->Radius();
-		
-		
+
+
 		//floor
 		mShadowMappingMaterial->ColorTexture() << mFloorTexture;
 		mShadowMappingMaterial->CameraPosition() << mCamera->PositionVector();
@@ -263,14 +307,14 @@ namespace Rendering
 		mShadowMappingMaterial->ShadowMapSize() << shadowMapSize;
 
 		pass->Apply(0, direct3DDeviceContext);
-		
+
 		direct3DDeviceContext->Draw(mPlaneVertexCount, 0); //draw the floor
 		mGame->UnbindPixelShaderResources(0, 3);
 
 		// Draw model
 		direct3DDeviceContext->IASetVertexBuffers(0, 1, &mModelPositionUVNormalVertexBuffer, &stride, &offset);
 		direct3DDeviceContext->IASetIndexBuffer(mModelIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-		
+
 		XMMATRIX modelWVP = modelWorldMatrix * mCamera->ViewMatrix() * mCamera->ProjectionMatrix();
 		projectiveTextureMatrix = modelWorldMatrix * mProjector->ViewMatrix() * mProjector->ProjectionMatrix() * XMLoadFloat4x4(&mProjectedTextureScalingMatrix);
 
@@ -282,7 +326,6 @@ namespace Rendering
 		mShadowMappingMaterial->LightColor() << mPointLight->ColorVector();
 		mShadowMappingMaterial->LightPosition() << mPointLight->PositionVector();
 		mShadowMappingMaterial->LightRadius() << mPointLight->Radius();
-
 		//house
 		mShadowMappingMaterial->ColorTexture() << mCheckerboardTexture;
 		mShadowMappingMaterial->CameraPosition() << mCamera->PositionVector();
@@ -291,20 +334,30 @@ namespace Rendering
 		mShadowMappingMaterial->ShadowMapSize() << shadowMapSize;
 
 		pass->Apply(0, direct3DDeviceContext);
-		
+
 		direct3DDeviceContext->DrawIndexed(mModelIndexCount, 0, 0); //draw the main object
 		mGame->UnbindPixelShaderResources(0, 3);
 
-		obj_->Draw(gameTime);
+		for (int i = 0; i < objs_.size(); i++)
+		{
+			objs_[i]->Draw(gameTime);
+		}
+
+		box_debug_->Draw(gameTime);
+		box_debug_2_->Draw(gameTime);
+
 		mProxyModel->Draw(gameTime);
 		mRenderableProjectorFrustum->Draw(gameTime);
+
+		player_->Draw(gameTime);
+		player_->DrawDebug(gameTime);
 
 		mRenderStateHelper.SaveAll();
 		mSpriteBatch->Begin();
 
 		if (mDrawDepthMap)
 		{
-			//mSpriteBatch->Draw(mDepthMap->OutputTexture(), DepthMapDestinationRectangle);
+			mSpriteBatch->Draw(mDepthMap->OutputTexture(), DepthMapDestinationRectangle);
 		}
 
 		std::wostringstream helpLabel;
@@ -319,7 +372,7 @@ namespace Rendering
 		if (mActiveTechnique == ShadowMappingTechniquePCF)
 		{
 			helpLabel << L"Depth Bias (+J/-K): " << (int)mDepthBias << "\n"
-				      << L"Slope-Scaled Depth Bias (+O/-P): " << mSlopeScaledDepthBias;
+				<< L"Slope-Scaled Depth Bias (+O/-P): " << mSlopeScaledDepthBias;
 		}
 
 		mSpriteFont->DrawString(mSpriteBatch, helpLabel.str().c_str(), mTextPosition);
@@ -337,7 +390,7 @@ namespace Rendering
 			{
 				mActiveTechnique = (ShadowMappingTechnique)(0);
 			}
-		
+
 			mShadowMappingMaterial->SetCurrentTechnique(*mShadowMappingMaterial->GetEffect()->TechniquesByName().at(ShadowMappingTechniqueNames[mActiveTechnique]));
 			mDepthMapMaterial->SetCurrentTechnique(*mDepthMapMaterial->GetEffect()->TechniquesByName().at(DepthMappingTechniqueNames[mActiveTechnique]));
 		}
@@ -464,38 +517,38 @@ namespace Rendering
 
 		// Move point light and projector
 		XMFLOAT3 movementAmount = Vector3Helper::Zero;
-        if (mKeyboard != nullptr)
-        {
+		if (mKeyboard != nullptr)
+		{
 			if (mKeyboard->IsKeyDown(DIK_NUMPAD4))
-            {
-                movementAmount.x = -1.0f;
-            }
+			{
+				movementAmount.x = -1.0f;
+			}
 
-            if (mKeyboard->IsKeyDown(DIK_NUMPAD6))
-            {
-                movementAmount.x = 1.0f;
-            }
+			if (mKeyboard->IsKeyDown(DIK_NUMPAD6))
+			{
+				movementAmount.x = 1.0f;
+			}
 
 			if (mKeyboard->IsKeyDown(DIK_NUMPAD9))
-            {
-                movementAmount.y = 1.0f;
-            }
+			{
+				movementAmount.y = 1.0f;
+			}
 
-            if (mKeyboard->IsKeyDown(DIK_NUMPAD3))
-            {
-                movementAmount.y = -1.0f;
-            }
+			if (mKeyboard->IsKeyDown(DIK_NUMPAD3))
+			{
+				movementAmount.y = -1.0f;
+			}
 
 			if (mKeyboard->IsKeyDown(DIK_NUMPAD8))
-            {
-                movementAmount.z = -1.0f;
-            }
+			{
+				movementAmount.z = -1.0f;
+			}
 
-            if (mKeyboard->IsKeyDown(DIK_NUMPAD2))
-            {
-                movementAmount.z = 1.0f;
-            }
-        }
+			if (mKeyboard->IsKeyDown(DIK_NUMPAD2))
+			{
+				movementAmount.z = 1.0f;
+			}
+		}
 
 		XMVECTOR movement = XMLoadFloat3(&movementAmount) * LightMovementRate * elapsedTime;
 		mPointLight->SetPosition(mPointLight->PositionVector() + movement);
@@ -544,7 +597,7 @@ namespace Rendering
 	void ShadowMappingDemo::InitializeProjectedTextureScalingMatrix()
 	{
 		mProjectedTextureScalingMatrix._11 = 0.5f;
-		mProjectedTextureScalingMatrix._22 = -0.5f;		
+		mProjectedTextureScalingMatrix._22 = -0.5f;
 		mProjectedTextureScalingMatrix._33 = 1.0f;
 		mProjectedTextureScalingMatrix._41 = 0.5f;
 		mProjectedTextureScalingMatrix._42 = 0.5f;

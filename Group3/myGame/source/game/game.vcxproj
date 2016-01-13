@@ -92,13 +92,19 @@ IF EXIST "$(ProjectDir)..\content" xcopy /E /Y "$(ProjectDir)Content" "$(OutDir)
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="RenderingGame.cpp" />
+    <ClCompile Include="Rigidbody.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShadowMappingDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="RenderingGame.h" />
+    <ClInclude Include="Rigidbody.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="ShadowMappingDemo.h" />
   </ItemGroup>
   <ItemGroup>

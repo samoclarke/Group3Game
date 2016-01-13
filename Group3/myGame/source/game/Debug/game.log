@@ -1,4 +1,4 @@
-﻿Build started 31/12/2015 20:46:20.
+﻿Build started 13/01/2016 17:36:19.
      1>Project "C:\Users\soclarke\Source\Repos\Group3\myGame\source\game\game.vcxproj" on node 2 (Build target(s)).
      1>PreBuildEvent:
          mkdir "C:\Users\soclarke\Source\Repos\Group3\myGame\build\Debug\Content"
@@ -21,22 +21,26 @@
          C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\content\Models\DirectionalLightProxy.mtl
          C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\content\Models\DirectionalLightProxy.obj
          C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\content\Models\house.3DS
+         C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\content\Models\Miguel.3DS
+         C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\content\Models\OBBProxy.3DS
          C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\content\Models\PointLightProxy.mtl
          C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\content\Models\PointLightProxy.obj
          C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\content\Textures\bench.jpg
          C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\content\Textures\grass.jpg
          C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\content\Textures\house.bmp
          C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\content\Textures\white.jpg
-         21 File(s) copied
+         23 File(s) copied
        ClCompile:
-         I:\Programs\Visual Studio Pro 2013 v4\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Windows Kits\8.1\Include\um" /I"C:\Program Files (x86)\Windows Kits\8.1\Include\shared" /I"C:\Program Files (x86)\Windows Kits\8.1\Include\winrt" /IC:\Users\soclarke\Source\Repos\Group3\myGame\build\..\source\Library /IC:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\Effects11\include /IC:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\DirectXTK\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameObject.cpp
-         GameObject.cpp
+         I:\Programs\Visual Studio Pro 2013 v4\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Windows Kits\8.1\Include\um" /I"C:\Program Files (x86)\Windows Kits\8.1\Include\shared" /I"C:\Program Files (x86)\Windows Kits\8.1\Include\winrt" /IC:\Users\soclarke\Source\Repos\Group3\myGame\build\..\source\Library /IC:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\Effects11\include /IC:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\DirectXTK\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Player.cpp
+         Player.cpp
          c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-     1>c:\users\soclarke\source\repos\group3\mygame\source\game\gameobject.cpp(82): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
        Link:
          I:\Programs\Visual Studio Pro 2013 v4\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\soclarke\Source\Repos\Group3\myGame\build\Debug\game.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x86" /LIBPATH:C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\lib /LIBPATH:C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\Effects11\lib\x86 /LIBPATH:C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\DirectXTK\lib\Win32\Debug /LIBPATH:"C:\Users\soclarke\Source\Repos\Group3\myGame\build\..\..\external\assimp\lib\assimp_debug-dll_win32" d3d11.lib DirectXTK.lib d3dcompiler.lib Effects11d.lib dinput8.lib dxguid.lib Shlwapi.lib Libraryd.lib assimpd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\soclarke\Source\Repos\Group3\myGame\build\Debug\game.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\soclarke\Source\Repos\Group3\myGame\build\Debug\game.lib" /MACHINE:X86 Debug\GameObject.obj
+         Debug\Player.obj
          Debug\Program.obj
          Debug\RenderingGame.obj
+         Debug\Rigidbody.obj
+         Debug\Scene.obj
          Debug\ShadowMappingDemo.obj
          game.vcxproj -> C:\Users\soclarke\Source\Repos\Group3\myGame\build\Debug\game.exe
        PostBuildEvent:
@@ -48,4 +52,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.44
+Time Elapsed 00:00:01.38

@@ -2,11 +2,12 @@
 #include "Game.h"
 #include "MatrixHelper.h"
 #include "Model.h"
-#include "Mesh.h"
 #include "Effect.h"
 #include "BasicMaterial.h"
 #include "Camera.h"
 #include "Utility.h"
+#include "GameException.h"
+#include <WICTextureLoader.h>
 
 namespace Library
 {
@@ -16,16 +17,18 @@ namespace Library
 		mVertexBuffer(nullptr), mIndexBuffer(nullptr), m_model_index_count(0),
 		mWorldMatrix(MatrixHelper::Identity), mScaleMatrix(MatrixHelper::Identity)
 	{
+
 		std::string s1 = "Content\\Models\\";
 		s1 = s1 + name;
 
 		std::unique_ptr<Model> model(new Model(*mGame, s1, true));
 		Mesh* mesh = model->Meshes().at(0);
-		m_model_index_count = mesh->Indices().size();
+		mesh_ = mesh;
+		m_model_index_count = mesh_->Indices().size();
 
 		position_ = { 0.0f, 0.0f, 0.0f };
 		scale_ = { 0.02f, 0.02f, 0.02f };
-		orientation_ = { 0.0f, 0.0f, 0.0f };
+		orientation_ = { -1.5f, 0.0f, 0.0f };
 
 		XMStoreFloat4x4(&mScaleMatrix, XMMatrixScaling(scale_.x, scale_.y, scale_.z));
 
@@ -36,8 +39,18 @@ namespace Library
 		mMaterial->Initialize(*mEffect);
 
 		
-		mMaterial->CreateVertexBuffer(mGame->Direct3DDevice(), *mesh, &mVertexBuffer);
-		mesh->CreateIndexBuffer(&mIndexBuffer);
+		mMaterial->CreateVertexBuffer(mGame->Direct3DDevice(), *mesh_, &mVertexBuffer);
+		mesh_->CreateIndexBuffer(&mIndexBuffer);
+
+		std::wstring textureName = L"Content\\Textures\\house.bmp";
+		HRESULT hr = DirectX::CreateWICTextureFromFile(mGame->Direct3DDevice(), mGame->Direct3DDeviceContext(), textureName.c_str(), nullptr, &texture_);
+		if (FAILED(hr))
+		{
+			throw GameException("CreateWICTextureFromFile() failed.", hr);
+		}
+
+		mKeyboard = (Keyboard*)mGame->Services().GetService(Keyboard::TypeIdClass());
+
 	}
 
 	GameObject::~GameObject()
@@ -79,12 +92,19 @@ namespace Library
 	void GameObject::Update(const GameTime & gameTime)
 	{
 
-		orientation_.x += gameTime.ElapsedGameTime();
-
 		XMMATRIX worldMatrix = XMMatrixIdentity();
 		
 		XMStoreFloat4x4(&mWorldMatrix, XMMatrixRotationRollPitchYaw(orientation_.x, orientation_.y, orientation_.z) * 
 			XMMatrixScaling(scale_.x, scale_.y, scale_.z) * XMMatrixTranslation(position_.x, position_.y, position_.z));
 		
+	}
+
+	Mesh* GameObject::GetMesh()
+	{
+		return mesh_;
+	}
+	XMFLOAT4X4 GameObject::GetWorldMatrix()
+	{
+		return mWorldMatrix;
 	}
 }
