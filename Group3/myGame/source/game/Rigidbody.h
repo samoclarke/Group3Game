@@ -33,16 +33,23 @@ struct SphereCollider
 
 struct Contact
 {
+
+	class Rigidbody;
+
+	XMFLOAT3 normal;
+	float penetration;
+	XMFLOAT3 point;
+	XMFLOAT3 a_pos;
+	XMFLOAT3 b_pos;
+
 	void Init()
 	{
 		normal = { 0,0,0 };
 		penetration = 0;
 		point = { 0,0,0 };
+		a_pos = { 0,0,0 };
+		b_pos = { 0,0,0 };
 	}
-
-	XMFLOAT3 normal;
-	float penetration;
-	XMFLOAT3 point;
 };
 
 class Rigidbody

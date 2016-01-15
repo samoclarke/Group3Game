@@ -6,7 +6,7 @@
 
 #include "GameObject.h"
 #include "Player.h"
-
+#include "Crate.h"
 #include "Scene.h"
 
 using namespace Library;
@@ -97,8 +97,6 @@ namespace Rendering
 
 		ID3D11ShaderResourceView* mFloorTexture;
 
-
-
 		Effect* mShadowMappingEffect;
 		ShadowMappingMaterial * mShadowMappingMaterial;
 		ID3D11Buffer* mModelPositionVertexBuffer;
@@ -121,15 +119,18 @@ namespace Rendering
 		float mSlopeScaledDepthBias;
 
 		std::vector<GameObject*> objs_;
+
 		Player* player_;
+		Crate* crate_;
 
-		Rigidbody* box_body_;
-		ProxyModel* box_debug_;
-
-		Rigidbody* box_body_2_;
-		ProxyModel* box_debug_2_;
+		std::vector<Rigidbody*> boxes_;
+		std::vector<ProxyModel*> debug_boxes_;
 
 		Scene* scene_;
+
+		bool follow_player_;
+
+		int gems_;
 
 	};
 }

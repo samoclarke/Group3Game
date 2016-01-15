@@ -10,8 +10,8 @@ namespace Library
 
     const float Projector::DefaultFieldOfView = XM_PIDIV4;
     const float Projector::DefaultAspectRatio = 4.0f / 3.0f;
-	const float Projector::DefaultNearPlaneDistance = .5f;
-    const float Projector::DefaultFarPlaneDistance = 100.0f;
+	const float Projector::DefaultNearPlaneDistance = 1.0f;
+    const float Projector::DefaultFarPlaneDistance = 300.0f;
 
     Projector::Projector(Game& game)
         : GameComponent(game),

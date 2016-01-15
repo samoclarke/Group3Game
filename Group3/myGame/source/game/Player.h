@@ -3,36 +3,40 @@
 #include "GameObject.h"
 #include "ProxyModel.h"
 
-namespace Library
+#define PI 3.14159265359
+
+class Player : public GameObject
 {
-	class Player : public GameObject
-	{
 
-	public:
+public:
 
-		Player(Game& game, Camera& camera, Keyboard& keyboard);
-		~Player();
+	Player(Game& game, Camera& camera, Keyboard& keyboard);
+	~Player();
 
-		void Update(const GameTime& gameTime);
-		void DrawDebug(const GameTime& gameTime);
+	void Update(const GameTime& gameTime);
+	void DrawDebug(const GameTime& gameTime);
 
-		Rigidbody* GetRigidBody() { return rigid_; }
+	Rigidbody* GetRigidBody() { return rigid_; }
 
-	private:
+	void SetMoveable(bool move) { moveable_ = move; }
 
-		Keyboard* keyboard_;
-		float speed_;
+private:
 
-		float jump_force_;
-		bool touching_ground_;
+	Keyboard* keyboard_;
+	float speed_;
 
-		double jump_timer_max_;
-		double jump_timer_;
+	float jump_force_;
+	bool touching_ground_;
 
-		XMFLOAT3 collider_offset_;
+	double jump_timer_max_;
+	double jump_timer_;
+
+	XMFLOAT3 collider_offset_;
 		
-		Rigidbody* rigid_;
-		ProxyModel* debug_collider_;
+	Rigidbody* rigid_;
+	ProxyModel* debug_collider_;
+	bool moveable_;
 
-	};
-}
+	float target_y_rotation_;
+
+};

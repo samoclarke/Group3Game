@@ -39,7 +39,7 @@ namespace Rendering
 
     private:
 		static const XMFLOAT4 BackgroundColor;
-        FirstPersonCamera* mCamera;
+        Camera* mCamera;
         //TriangleDemo* mDemo;
 
 		//Mouse and keyboard setup

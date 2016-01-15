@@ -30,15 +30,15 @@ namespace Rendering
 		const float ShadowMappingDemo::LightModulationRate = UCHAR_MAX;
 	const float ShadowMappingDemo::LightMovementRate = 10.0f;
 	const XMFLOAT2 ShadowMappingDemo::LightRotationRate = XMFLOAT2(XM_2PI, XM_2PI);
-	const UINT ShadowMappingDemo::DepthMapWidth = 1024U;
-	const UINT ShadowMappingDemo::DepthMapHeight = 1024U;
+	const UINT ShadowMappingDemo::DepthMapWidth = 4096U;
+	const UINT ShadowMappingDemo::DepthMapHeight = 4096U;
 	const RECT ShadowMappingDemo::DepthMapDestinationRectangle = { 0, 512, 256, 768 };
 	const float ShadowMappingDemo::DepthBiasModulationRate = 10000;
 
 	ShadowMappingDemo::ShadowMappingDemo(Game& game, Camera& camera)
 		: DrawableGameComponent(game, camera), mCheckerboardTexture(nullptr),
 		mPlanePositionVertexBuffer(nullptr), mPlanePositionUVNormalVertexBuffer(nullptr), mPlaneIndexBuffer(nullptr), mPlaneVertexCount(0),
-		mKeyboard(nullptr), mAmbientColor(1.0f, 1.0f, 1.0, 0.0f), mPointLight(nullptr),
+		mKeyboard(nullptr), mAmbientColor(1.0f, 1.0f, 1.0, 0.2f), mPointLight(nullptr),
 		mSpecularColor(1.0f, 1.0f, 1.0f, 1.0f), mSpecularPower(25.0f), mPlaneWorldMatrix(MatrixHelper::Identity), mProxyModel(nullptr),
 		mProjector(nullptr), mProjectorFrustum(XMMatrixIdentity()), mRenderableProjectorFrustum(nullptr),
 		mShadowMappingEffect(nullptr), mShadowMappingMaterial(nullptr),
@@ -46,7 +46,8 @@ namespace Rendering
 		mModelPositionVertexBuffer(nullptr), mModelPositionUVNormalVertexBuffer(nullptr), mModelIndexBuffer(nullptr), mModelIndexCount(0),
 		mModelWorldMatrix(MatrixHelper::Identity), mDepthMapEffect(nullptr), mDepthMapMaterial(nullptr), mDepthMap(nullptr), mDrawDepthMap(true),
 		mSpriteBatch(nullptr), mSpriteFont(nullptr), mTextPosition(0.0f, 40.0f), mActiveTechnique(ShadowMappingTechniqueSimple),
-		mDepthBiasState(nullptr), mDepthBias(0), mSlopeScaledDepthBias(2.0f), mFloorTexture(nullptr)
+		mDepthBiasState(nullptr), mDepthBias(5.0f), mSlopeScaledDepthBias(5.0f), mFloorTexture(nullptr), follow_player_(true),
+		gems_(0)
 	{
 	}
 
@@ -143,7 +144,7 @@ namespace Rendering
 
 		mPointLight = new PointLight(*mGame);
 		mPointLight->SetRadius(50.0f);
-		mPointLight->SetPosition(0.0f, 5.0f, 2.0f);
+		mPointLight->SetPosition(0.0f, 5.0f, 30.0f);
 
 		mKeyboard = (Keyboard*)mGame->Services().GetService(Keyboard::TypeIdClass());
 		assert(mKeyboard != nullptr);
@@ -151,25 +152,27 @@ namespace Rendering
 		mProxyModel = new ProxyModel(*mGame, *mCamera, "Content\\Models\\PointLightProxy.obj", XMFLOAT3{ 0.5,0.5,0.5 });
 		mProxyModel->Initialize();
 
-		AABB* box = new AABB();
-		box->center     =	{ 0.0f, -40.0f, 0.0f  };
-		box->halfwidths =	{ 20.0f, 40.0f, 20.0f };
-		box_debug_ = new ProxyModel(*mGame, *mCamera, "Content\\Models\\OBBProxy.3ds", box->halfwidths);
-		box_debug_->Initialize();
-		box_debug_->SetPosition(box->center);
-		box_body_ = new Rigidbody(0, box, box->center);
-		scene_->AddRigidBody(box_body_);
+		for (int i = 0; i < 5; i++)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				AABB* box = new AABB();
+				box->center = { (i * 10.0f) - 25, -5.0f, (j * 10.0f) - 25 };
+				box->halfwidths = { 5, 5, 5 };
 
-		AABB* box_2 = new AABB();
-		box_2->center = { 0.0f, 0.0f, 0.0f };
-		box_2->halfwidths = { 5.0f, 5.0f, 5.0f };
-		box_debug_2_ = new ProxyModel(*mGame, *mCamera, "Content\\Models\\OBBProxy.3ds", box_2->halfwidths);
-		box_debug_2_->Initialize();
-		box_debug_2_->SetPosition(box_2->center);
-		box_body_2_ = new Rigidbody(0, box_2, box_2->center);
-		scene_->AddRigidBody(box_body_2_);
+				ProxyModel* box_debug = new ProxyModel(*mGame, *mCamera, "Content\\Models\\OBBProxy.3ds", box->halfwidths);
+				box_debug->Initialize();
+				box_debug->SetPosition(box->center);
 
-		
+				Rigidbody* box_body = new Rigidbody(0, box, box->center);
+				
+				boxes_.push_back(box_body);
+				debug_boxes_.push_back(box_debug);
+
+				scene_->AddRigidBody(box_body);
+
+			}
+		}
 
 		XMStoreFloat4x4(&mPlaneWorldMatrix, XMMatrixRotationX(-1.57f)* XMMatrixScaling(100.0f, 100.0f, 100.0f)* XMMatrixTranslation(0.0f, 0.0f, 5.5f));
 
@@ -199,12 +202,24 @@ namespace Rendering
 		mSpriteBatch = new SpriteBatch(mGame->Direct3DDeviceContext());
 		mSpriteFont = new SpriteFont(mGame->Direct3DDevice(), L"Content\\Fonts\\Arial_14_Regular.spritefont");
 
-		std::string s1 = "Miguel.3ds";
-		GameObject* obj = new GameObject( s1, *mGame, *mCamera);
-		objs_.push_back(obj);
 
 		player_ = new Player(*mGame, *mCamera, *mKeyboard);
+		objs_.push_back(player_);
+
+		crate_ = new Crate(*mGame, *mCamera, { 0,2,10 });
+		objs_.push_back(crate_);
+
+		GameObject* box = new GameObject("Box", *mGame, *mCamera);
+		box->SetScale({ 0.2f, 0.2f, 0.2f });
+		objs_.push_back(box);
+
+		for (int i = 0; i < objs_.size(); ++i)
+		{
+			mDepthMapMaterial->CreateVertexBuffer(mGame->Direct3DDevice(), (*objs_[i]->GetMesh()), objs_[i]->GetPtrToDepthBuffer());
+		}
+
 		scene_->AddRigidBody(player_->GetRigidBody());
+		scene_->AddRigidBody(crate_->GetRigidBody());
 
 		UpdateDepthBiasState();
 	}
@@ -227,16 +242,37 @@ namespace Rendering
 			objs_[i]->Update(gameTime);
 		}
 
-		player_->Update(gameTime);
-
-		box_debug_->Update(gameTime);
-		box_debug_2_->Update(gameTime);
+		for (int i = 0; i < debug_boxes_.size(); ++i)
+		{
+			debug_boxes_[i]->Update(gameTime);
+		}
 
 		scene_->Step(gameTime.ElapsedGameTime());
+
+		XMFLOAT3 cam_pos = { player_->GetPosition().x, player_->GetPosition().y + 5, player_->GetPosition().z + 15 };
+
+		if (follow_player_)
+		{
+			mCamera->SetPosition(cam_pos);
+		}
+
+		if (mKeyboard->WasKeyReleasedThisFrame(DIK_LCONTROL))
+		{
+			follow_player_ = !follow_player_;
+		}
+
+		player_->SetMoveable(follow_player_);
 
 		mProxyModel->Update(gameTime);
 		mProjector->Update(gameTime);
 		mRenderableProjectorFrustum->Update(gameTime);
+
+		if (player_->GetPosition().y < -40)
+		{
+			player_->GetRigidBody()->SetPosition({ 0,10,0 });
+			player_->GetRigidBody()->SetVelocity({ 0,0,0 });
+		}
+
 	}
 
 	void ShadowMappingDemo::Draw(const GameTime& gameTime)
@@ -257,6 +293,8 @@ namespace Rendering
 
 		direct3DDeviceContext->RSSetState(mDepthBiasState);
 
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		UINT stride = mDepthMapMaterial->VertexSize();
 		UINT offset = 0;
 		direct3DDeviceContext->IASetVertexBuffers(0, 1, &mModelPositionVertexBuffer, &stride, &offset);
@@ -268,6 +306,25 @@ namespace Rendering
 		pass->Apply(0, direct3DDeviceContext);
 
 		direct3DDeviceContext->DrawIndexed(mModelIndexCount, 0, 0); //shadow map drawing
+
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		for (int i = 0; i < objs_.size(); ++i)
+		{
+			ID3D11Buffer* ind_buffer = objs_[i]->GetIndexBuffer();
+			direct3DDeviceContext->IASetVertexBuffers(0, 1, objs_[i]->GetPtrToDepthBuffer(), &stride, &offset);
+			direct3DDeviceContext->IASetIndexBuffer(ind_buffer, DXGI_FORMAT_R32_UINT, 0);
+
+			XMFLOAT4X4* model_matrix = objs_[i]->GetWorldMatrix();
+			XMMATRIX model_world_matrix = XMLoadFloat4x4(model_matrix);
+			mDepthMapMaterial->WorldLightViewProjection() << model_world_matrix * mProjector->ViewMatrix() * mProjector->ProjectionMatrix();
+
+			pass->Apply(0, direct3DDeviceContext);
+
+			direct3DDeviceContext->DrawIndexed(objs_[i]->GetModelIndexCount(), 0, 0); //shadow map drawing
+		}
+
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		mDepthMap->End();
 		mRenderStateHelper.RestoreRasterizerState();
@@ -338,42 +395,36 @@ namespace Rendering
 		direct3DDeviceContext->DrawIndexed(mModelIndexCount, 0, 0); //draw the main object
 		mGame->UnbindPixelShaderResources(0, 3);
 
+		XMMATRIX projective_texture = mProjector->ViewMatrix() * mProjector->ProjectionMatrix() * XMLoadFloat4x4(&mProjectedTextureScalingMatrix);
+		//player_->Draw(gameTime, &specularColor, &mSpecularPower, &ambientColor, mPointLight, mDepthMap->OutputTexture(), &shadowMapSize, &projective_texture);
+
 		for (int i = 0; i < objs_.size(); i++)
 		{
-			objs_[i]->Draw(gameTime);
+			objs_[i]->Draw(gameTime, &specularColor, &mSpecularPower, &ambientColor, mPointLight, mDepthMap->OutputTexture(), &shadowMapSize, &projective_texture);
 		}
 
-		box_debug_->Draw(gameTime);
-		box_debug_2_->Draw(gameTime);
+		for (int i = 0; i < debug_boxes_.size(); ++i)
+		{
+			debug_boxes_[i]->Draw(gameTime);
+		}
 
 		mProxyModel->Draw(gameTime);
 		mRenderableProjectorFrustum->Draw(gameTime);
 
-		player_->Draw(gameTime);
 		player_->DrawDebug(gameTime);
 
 		mRenderStateHelper.SaveAll();
 		mSpriteBatch->Begin();
 
-		if (mDrawDepthMap)
-		{
-			mSpriteBatch->Draw(mDepthMap->OutputTexture(), DepthMapDestinationRectangle);
-		}
 
 		std::wostringstream helpLabel;
-		helpLabel << L"Ambient Intensity (+PgUp/-PgDn): " << mAmbientColor.a << "\n";
-		helpLabel << L"Point Light Intensity (+Home/-End): " << mPointLight->Color().a << "\n";
-		helpLabel << L"Specular Power (+Insert/-Delete): " << mSpecularPower << "\n";
-		helpLabel << L"Move Projector/Light (8/2, 4/6, 3/9)\n";
-		helpLabel << L"Rotate Projector (Arrow Keys)\n";
-		helpLabel << L"Show Shadow Map (Enter): " << (mDrawDepthMap ? "Yes" : "No") << "\n";
-		helpLabel << std::setprecision(5) << L"Active Technique (Space): " << ShadowMappingDisplayNames[mActiveTechnique].c_str() << "\n";
+		helpLabel << L"Gems: " << gems_ << "\n\n";
+		helpLabel << L"Control: Free Floating Cam" << "\n";
+		helpLabel << L"player_y_rot:" << player_->GetOrientation().y << "\n";
 
-		if (mActiveTechnique == ShadowMappingTechniquePCF)
-		{
-			helpLabel << L"Depth Bias (+J/-K): " << (int)mDepthBias << "\n"
-				<< L"Slope-Scaled Depth Bias (+O/-P): " << mSlopeScaledDepthBias;
-		}
+
+		//helpLabel << std::setprecision(5) << L"Active Technique (Space): " << ShadowMappingDisplayNames[mActiveTechnique].c_str() << "\n";
+
 
 		mSpriteFont->DrawString(mSpriteBatch, helpLabel.str().c_str(), mTextPosition);
 
@@ -385,14 +436,8 @@ namespace Rendering
 	{
 		if (mKeyboard != nullptr && mKeyboard->WasKeyPressedThisFrame(DIK_SPACE))
 		{
-			mActiveTechnique = ShadowMappingTechnique(mActiveTechnique + 1);
-			if (mActiveTechnique >= ShadowMappingTechniqueEnd)
-			{
-				mActiveTechnique = (ShadowMappingTechnique)(0);
-			}
-
-			mShadowMappingMaterial->SetCurrentTechnique(*mShadowMappingMaterial->GetEffect()->TechniquesByName().at(ShadowMappingTechniqueNames[mActiveTechnique]));
-			mDepthMapMaterial->SetCurrentTechnique(*mDepthMapMaterial->GetEffect()->TechniquesByName().at(DepthMappingTechniqueNames[mActiveTechnique]));
+			mShadowMappingMaterial->SetCurrentTechnique(*mShadowMappingMaterial->GetEffect()->TechniquesByName().at(ShadowMappingTechniqueNames[ShadowMappingTechniquePCF]));
+			mDepthMapMaterial->SetCurrentTechnique(*mDepthMapMaterial->GetEffect()->TechniquesByName().at(DepthMappingTechniqueNames[ShadowMappingTechniquePCF]));
 		}
 	}
 

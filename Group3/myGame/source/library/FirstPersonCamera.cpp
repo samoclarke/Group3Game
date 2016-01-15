@@ -85,43 +85,41 @@ namespace Library
 
         if (mKeyboard != nullptr)
         {
-			if (mKeyboard->IsKeyDown(DIK_LCONTROL))
+			
+			if (mKeyboard->IsKeyDown(DIK_W))
 			{
-				if (mKeyboard->IsKeyDown(DIK_W))
-				{
-					movementAmount.y = 1.0f;
-				}
-
-				if (mKeyboard->IsKeyDown(DIK_S))
-				{
-					movementAmount.y = -1.0f;
-				}
-
-				if (mKeyboard->IsKeyDown(DIK_A))
-				{
-					movementAmount.x = -1.0f;
-				}
-
-				if (mKeyboard->IsKeyDown(DIK_D))
-				{
-					movementAmount.x = 1.0f;
-				}
-
-				//Q and E
-				if (mKeyboard->IsKeyDown(DIK_Q))
-				{
-					movementAmount.z = 1.0f;
-				}
-
-				if (mKeyboard->IsKeyDown(DIK_E))
-				{
-					movementAmount.z = -1.0f;
-				}
+				movementAmount.y = 1.0f;
 			}
+
+			if (mKeyboard->IsKeyDown(DIK_S))
+			{
+				movementAmount.y = -1.0f;
+			}
+
+			if (mKeyboard->IsKeyDown(DIK_A))
+			{
+				movementAmount.x = -1.0f;
+			}
+
+			if (mKeyboard->IsKeyDown(DIK_D))
+			{
+				movementAmount.x = 1.0f;
+			}
+
+			//Q and E
+			if (mKeyboard->IsKeyDown(DIK_Q))
+			{
+				movementAmount.z = 1.0f;
+			}
+
+			if (mKeyboard->IsKeyDown(DIK_E))
+			{
+				movementAmount.z = -1.0f;
+			}
+			
         }
 
         XMFLOAT2 rotationAmount = Vector2Helper::Zero;
-
 
         if ((mMouse != nullptr) && (mMouse->IsButtonHeldDown(MouseButtonsLeft)))
         {

@@ -34,7 +34,7 @@ namespace Rendering
 
         mCamera = new FirstPersonCamera(*this);
         mComponents.push_back(mCamera);
-        mServices.AddService(Camera::TypeIdClass(), mCamera);
+        mServices.AddService(FirstPersonCamera::TypeIdClass(), mCamera);
 
 		mShadowMappingDemo = new ShadowMappingDemo(*this, *mCamera);
 		mComponents.push_back(mShadowMappingDemo);

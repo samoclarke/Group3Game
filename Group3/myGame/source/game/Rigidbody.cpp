@@ -45,6 +45,9 @@ void Rigidbody::Step(double dt, float gravity)
 		velocity_.y += acceleration.y * dt;
 		velocity_.z += acceleration.z * dt;
 
+		velocity_.x *= 0.95f;
+		velocity_.z *= 0.95f;
+
 		position_.x += velocity_.x * dt;
 		position_.y += velocity_.y * dt;
 		position_.z += velocity_.z * dt;

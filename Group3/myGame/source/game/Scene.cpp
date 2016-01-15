@@ -19,19 +19,20 @@ void Scene::Step(double dt)
 		(*iter)->SetColliding(false);
 	}
 
-	for 
-	(
-		std::list<Rigidbody*>::iterator iter = body_list_.begin();
-		iter != body_list_.end();
-		iter++
-	)
+
+	for
+		(
+			std::list<Rigidbody*>::iterator iter = body_list_.begin();
+			iter != body_list_.end();
+			iter++
+			)
 	{
 		for
-		(
-			std::list<Rigidbody*>::iterator iter_j = body_list_.begin();
-			iter_j != body_list_.end();
-			iter_j++
-		)
+			(
+				std::list<Rigidbody*>::iterator iter_j = body_list_.begin();
+				iter_j != body_list_.end();
+				iter_j++
+				)
 		{
 			if (iter != iter_j)
 			{
@@ -82,8 +83,6 @@ void Scene::Step(double dt)
 void Scene::ResolveSphereAABBCollision(Rigidbody* sphere, Rigidbody* aabb, Contact& c)
 {
 
-	if (c.penetration < 5) return;
-
 	XMVECTOR normal_vector = XMLoadFloat3(&c.normal);
 	normal_vector = XMVector3Normalize(normal_vector);
 
@@ -131,16 +130,16 @@ void Scene::ResolveSphereAABBCollision(Rigidbody* sphere, Rigidbody* aabb, Conta
 	XMStoreFloat3(&impulse_arg, box_vel_impulse);
 	aabb->AddVelocity(impulse_arg);
 
-	float k_slop = 0.000001f; // Penetration allowance
-	float percent = 0.00001f; // Penetration percentage to correct
-	float penetration_mult = c.penetration - k_slop;
+	//float k_slop = 0.0f; // Penetration allowance
+	float percent = 0.01f; // Penetration percentage to correct
+	float penetration_mult = c.penetration;
 
 	if (penetration_mult < 0)
 	{
 		penetration_mult = 0;
 	}
 
-	XMVECTOR correction = (penetration_mult / (im1 + im2)) * percent * normal_vector;
+	XMVECTOR correction = percent * normal_vector;
 
 	XMFLOAT3 sphere_correction;
 	XMStoreFloat3(&sphere_correction, (im1 * correction) * -1);
@@ -196,6 +195,8 @@ bool Scene::TestSphereAABB(SphereCollider* s, AABB* b, Contact& contact)
 		XMStoreFloat3(&norm, v);
 		contact.normal = norm;
 		contact.penetration = fabsf(s->r - SqDistPointAABB(s->center, b));
+		contact.a_pos = s->center;
+		contact.b_pos = b->center;
 		return true;
 	}
 
