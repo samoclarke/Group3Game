@@ -1,6 +1,6 @@
 ﻿#include <memory>
 #include "GameException.h"
-#include "RenderingGame.h"
+#include "PlatformGame.h"
 
 #if defined(DEBUG) || defined(_DEBUG)
 #define _CRTDBG_MAP_ALLOC
@@ -17,7 +17,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
-    std::unique_ptr<RenderingGame> game(new RenderingGame(instance, L"RenderingClass", L"Real-Time 3D Rendering", showCommand));
+	std::unique_ptr<PlatformGame> game(new PlatformGame(instance, L"PlatformerClass", L"Miguel The Hook", showCommand));
 
     try
     {

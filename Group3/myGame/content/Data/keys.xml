@@ -1,0 +1,27 @@
+<?xml version=1.0 encoding=ISO-8859-1?>
+<Bindings>
+	<Bind>
+		<Action>MenuUp</Action>
+		<Key>200</Key>
+	</Bind>
+	<Bind>
+		<Action>MenuDown</Action>
+		<Key>208</Key>
+	</Bind>
+	<Bind>
+		<Action>MenuLeft</Action>
+		<Key>203</Key>
+	</Bind>
+	<Bind>
+		<Action>MenuRight</Action>
+		<Key>205</Key>
+	</Bind>
+	<Bind>
+		<Action>MenuAccept</Action>
+		<Key>12</Key>
+	</Bind>
+	<Bind>
+		<Action>MenuBack</Action>
+		<Key>1</Key>
+	</Bind>
+</Bindings>

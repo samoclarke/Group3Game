@@ -1,8 +1,11 @@
 #pragma once
 
-#include <Common.h>
-#include <vector>
-#include "RigidBody.h"
+#include <list>
+#include "Rigidbody.h"
+#include <iostream>
+#include <algorithm>
+
+#define GRAV 50
 
 class Scene
 {
@@ -10,28 +13,28 @@ class Scene
 public:
 
 	Scene();
-	~Scene();
 
-	void SetGravity(float grav) { gravity_ = { 0.0f, grav, 0.0f }; }
-	XMFLOAT3 GetGravity() { return gravity_; }
-	float GetGravityF() { return gravity_.y; }
+	void Step(double dt);
+	std::list<Rigidbody*> GetBodyList() { return body_list_; }
 
-	void SetDT(float dt) { dt_ = dt; }
+	void ResolveSphereAABBCollision(Rigidbody* sphere, Rigidbody* aabb, Contact& c);
+	void ResolveSphereSphere(Rigidbody* a, Rigidbody* b);
 
-	void Step();
+	bool TestSphereAABB(SphereCollider* s, AABB* b, Contact& contact);
+	bool TestSphereSphere(SphereCollider* a, SphereCollider* b);
 
-	float GetDT() { return dt_; }
-	std::vector<RigidBody*> GetBodyList() { return body_list_; }
+	void AddRigidBody( Rigidbody* body );
+	void RemoveRigidBody( Rigidbody* body );
+
+	void ClosestPointAABB(XMFLOAT3 p, AABB* b);
+	float SqDistPointAABB(XMFLOAT3 p, AABB* b);
+
 
 private:
 
-	float dt_;
-	float inv_dt_;
-	std::vector<RigidBody*> body_list_;
+	std::list<Rigidbody*> body_list_;
 	int body_count_;
-	bool debug_draw_;
-	XMFLOAT3 gravity_;
 
-	void EulerIntegration(float d_time);
+	XMFLOAT3 p_;
 
 };

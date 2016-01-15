@@ -32,7 +32,7 @@ namespace Library
 
         static const float DefaultMouseSensitivity;
         static const float DefaultRotationRate;
-        static const float DefaultMovementRate;        
+        static const float DefaultMovementRate;
 
     protected:
         float mMouseSensitivity;
@@ -45,6 +45,7 @@ namespace Library
     private:
         FirstPersonCamera(const FirstPersonCamera& rhs);
         FirstPersonCamera& operator=(const FirstPersonCamera& rhs);
+
     };
 }
 

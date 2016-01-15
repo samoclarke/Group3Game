@@ -6,8 +6,8 @@ namespace Library
 {
 	RTTI_DEFINITIONS(Game)
 
-    const UINT Game::DefaultScreenWidth = 1024;
-    const UINT Game::DefaultScreenHeight = 768;
+    const UINT Game::DefaultScreenWidth = 1600;
+    const UINT Game::DefaultScreenHeight = 900;
     const UINT Game::DefaultFrameRate = 60;
     const UINT Game::DefaultMultiSamplingCount = 4;	
 

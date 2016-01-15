@@ -140,6 +140,7 @@ copy "$(TargetPath)" "$(SolutionDir)..\lib\"</Command>
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="Variable.cpp" />
     <ClCompile Include="VectorHelper.cpp" />
+    <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicMaterial.h" />
@@ -202,6 +203,7 @@ copy "$(TargetPath)" "$(SolutionDir)..\lib\"</Command>
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Variable.h" />
     <ClInclude Include="VectorHelper.h" />
+    <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexDeclarations.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

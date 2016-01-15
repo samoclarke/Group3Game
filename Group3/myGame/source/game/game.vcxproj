@@ -42,6 +42,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -53,7 +54,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(WindowsSDK_IncludePath);$(SolutionDir)..\source\Library;$(SolutionDir)..\..\external\Effects11\include;$(SolutionDir)..\..\external\DirectXTK\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSDK_IncludePath);$(SolutionDir)..\source\Library;$(SolutionDir)..\..\external\Effects11\include;$(SolutionDir)..\..\external\DirectXTK\include;$(SolutionDir)..\..\external\rapidxml</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -91,15 +92,32 @@ IF EXIST "$(ProjectDir)..\content" xcopy /E /Y "$(ProjectDir)Content" "$(OutDir)
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Crate.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="MenuManager.cpp" />
+    <ClCompile Include="PlatformGame.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Program.cpp" />
-    <ClCompile Include="RenderingGame.cpp" />
-    <ClCompile Include="ShadowMappingDemo.cpp" />
+    <ClCompile Include="Rectangle2D.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="TextObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Crate.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="RenderingGame.h" />
-    <ClInclude Include="ShadowMappingDemo.h" />
+    <ClInclude Include="MenuManager.h" />
+    <ClInclude Include="PlatformGame.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Rectangle2D.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="StateManager.h" />
+    <ClInclude Include="TextObject.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\..\content\Effects\DiffuseLighting.fx">
@@ -108,6 +126,9 @@ IF EXIST "$(ProjectDir)..\content" xcopy /E /Y "$(ProjectDir)Content" "$(OutDir)
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)\Content\Effects\%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

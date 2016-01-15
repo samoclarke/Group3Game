@@ -28,7 +28,6 @@ namespace Library
         bool mVisible;
         Camera* mCamera;
 
-    private:
         DrawableGameComponent(const DrawableGameComponent& rhs);
         DrawableGameComponent& operator=(const DrawableGameComponent& rhs);
     };

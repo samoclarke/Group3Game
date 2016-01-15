@@ -1,0 +1,105 @@
+<?xml version=1.0 encoding=ISO-8859-1?>
+<Menus>
+	<Menu>
+		<Title>Main Menu</Title>
+		<ParentMenu>Main Menu</ParentMenu>
+		<Button>
+			<Text>Play Game</Text>
+			<PosX>0.0f</PosX>
+			<PosY>1.25f</Posy>
+			<Function>BUTTONFUNC_PLAYGAME</Function>
+		</Button>
+		<Button>
+			<Text>Options</Text>
+			<PosX>0.0f</PosX>
+			<PosY>-0.0f</Posy>
+			<Function>BUTTONFUNC_OPTIONS</Function>
+		</Button>
+		<Button>
+			<Text>Quit</Text>
+			<PosX>0.0f</PosX>
+			<PosY>-1.25f</Posy>
+			<Function>BUTTONFUNC_QUITTODESKTOP</Function>
+		</Button>
+	</Menu>
+	<Menu>
+		<Title>Play Game</Title>
+		<ParentMenu>Main Menu</ParentMenu>
+		<Button>
+			<Text>New Game</Text>
+			<PosX>0.0f</PosX>
+			<PosY>1.25f</Posy>
+			<Function>BUTTONFUNC_NEWGAME</Function>
+		</Button>
+		<Button>
+			<Text>Load Game</Text>
+			<PosX>0.0f</PosX>
+			<PosY>0.0f</Posy>
+			<Function>BUTTONFUNC_LOADGAME</Function>
+		</Button>
+		<Button>
+			<Text>Back</Text>
+			<PosX>0.0f</PosX>
+			<PosY>-1.25f</Posy>
+			<Function>BUTTONFUNC_BACK</Function>
+		</Button>
+	</Menu>
+	<Menu>
+		<Title>Options</Title>
+		<ParentMenu>Main Menu</ParentMenu>
+		<Button>
+			<Text>Audio</Text>
+			<PosX>0.0f</PosX>
+			<PosY>1.25f</Posy>
+			<Function>BUTTONFUNC_AUDIOOPTIONS</Function>
+		</Button>
+		<Button>
+			<Text>Video</Text>
+			<PosX>0.0f</PosX>
+			<PosY>0.0f</Posy>
+			<Function>BUTTONFUNC_VIDEOOPTIONS</Function>
+		</Button>
+		<Button>
+			<Text>Controls</Text>
+			<PosX>0.0f</PosX>
+			<PosY>-1.25f</Posy>
+			<Function>BUTTONFUNC_CONTROLOPTIONS</Function>
+		</Button>
+		<Button>
+			<Text>Back</Text>
+			<PosX>0.0f</PosX>
+			<PosY>-2.5f</Posy>
+			<Function>BUTTONFUNC_BACK</Function>
+		</Button>
+	</Menu>
+	<Menu>
+		<Title>Audio Options</Title>
+		<ParentMenu>Options</ParentMenu>
+		<Button>
+			<Text>Back</Text>
+			<PosX>0.0f</PosX>
+			<PosY>0.0f</Posy>
+			<Function>BUTTONFUNC_BACK</Function>
+		</Button>
+	</Menu>
+	<Menu>
+		<Title>Video Options</Title>
+		<ParentMenu>Options</ParentMenu>
+		<Button>
+			<Text>Back</Text>
+			<PosX>0.0f</PosX>
+			<PosY>0.0f</Posy>
+			<Function>BUTTONFUNC_BACK</Function>
+		</Button>
+	</Menu>
+	<Menu>
+		<Title>Controls</Title>
+		<ParentMenu>Options</ParentMenu>
+		<Button>
+			<Text>Back</Text>
+			<PosX>0.0f</PosX>
+			<PosY>0.0f</Posy>
+			<Function>BUTTONFUNC_BACK</Function>
+		</Button>
+	</Menu>
+</Menus>
